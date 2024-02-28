@@ -6,7 +6,7 @@ public class NormalItem : Item
 {
     public enum eNormalType
     {
-        TYPE_ONE,
+        TYPE_ONE = 0,
         TYPE_TWO,
         TYPE_THREE,
         TYPE_FOUR,
@@ -51,6 +51,19 @@ public class NormalItem : Item
         }
 
         return prefabname;
+    }
+
+    protected override Sprite GetSprite()
+    {
+        Sprite sprite = null;
+
+        var gameConfig = Resources.Load<GameSettings>("gamesettings");
+
+        var themeSkin = gameConfig.skin;
+
+        sprite = Resources.Load<Sprite>($"skins/skin_{themeSkin}/{(int) ItemType + 1}");   
+
+        return sprite;
     }
 
     internal override bool IsSameType(Item other)
