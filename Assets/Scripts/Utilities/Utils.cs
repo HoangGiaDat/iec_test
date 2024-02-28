@@ -24,4 +24,10 @@ public class Utils
 
         return result;
     }
+
+    public static List<NormalItem.eNormalType> GetListNormalTypeExcept(NormalItem.eNormalType[] types)
+    {
+        List<NormalItem.eNormalType> list = Enum.GetValues(typeof(NormalItem.eNormalType)).Cast<NormalItem.eNormalType>().Except(types).ToList();
+        return list;
+    }
 }

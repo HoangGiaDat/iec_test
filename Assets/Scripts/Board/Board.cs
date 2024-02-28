@@ -63,10 +63,17 @@ public class Board
         {
             for (int y = 0; y < boardSizeY; y++)
             {
-                if (y + 1 < boardSizeY) m_cells[x, y].NeighbourUp = m_cells[x, y + 1];
-                if (x + 1 < boardSizeX) m_cells[x, y].NeighbourRight = m_cells[x + 1, y];
-                if (y > 0) m_cells[x, y].NeighbourBottom = m_cells[x, y - 1];
-                if (x > 0) m_cells[x, y].NeighbourLeft = m_cells[x - 1, y];
+                if (y + 1 < boardSizeY)
+                    m_cells[x, y].NeighbourUp = m_cells[x, y + 1];
+
+                if (x + 1 < boardSizeX)
+                    m_cells[x, y].NeighbourRight = m_cells[x + 1, y];
+
+                if (y > 0)
+                    m_cells[x, y].NeighbourBottom = m_cells[x, y - 1];
+
+                if (x > 0)
+                    m_cells[x, y].NeighbourLeft = m_cells[x - 1, y];
             }
         }
 
@@ -82,6 +89,7 @@ public class Board
                 NormalItem item = new NormalItem();
 
                 List<NormalItem.eNormalType> types = new List<NormalItem.eNormalType>();
+
                 if (cell.NeighbourBottom != null)
                 {
                     NormalItem nitem = cell.NeighbourBottom.Item as NormalItem;
@@ -110,6 +118,111 @@ public class Board
         }
     }
 
+
+    private Dictionary<NormalItem.eNormalType, int> GetAmountOfEachItemType()
+    {
+        Dictionary<NormalItem.eNormalType, int> dictTypeAndAmount = new Dictionary<NormalItem.eNormalType, int>();
+
+        for (int x = 0; x < boardSizeX; x++)
+        {
+            for (int y = 0; y < boardSizeY; y++)
+            {
+                Cell cell = m_cells[x, y];
+                NormalItem item = cell.Item as NormalItem;
+
+                if (item != null)
+                {
+                    if(dictTypeAndAmount.ContainsKey(item.ItemType))
+                    {
+                        dictTypeAndAmount[item.ItemType]++;
+                    }    
+                    else
+                    {
+                        dictTypeAndAmount[item.ItemType] = 1;
+                    }    
+                }    
+            }    
+        } 
+        
+        return dictTypeAndAmount;
+    }
+
+    internal void FillGapsWithNewItems()
+    {
+        for (int x = 0; x < boardSizeX; x++)
+        {
+            for (int y = 0; y < boardSizeY; y++)
+            {
+                Cell cell = m_cells[x, y];
+                if (!cell.IsEmpty) continue;
+                NormalItem item = new NormalItem();
+
+                List<NormalItem.eNormalType> types = new List<NormalItem.eNormalType>();
+
+                if (cell.NeighbourBottom != null)
+                {
+                    NormalItem nitem = cell.NeighbourBottom.Item as NormalItem;
+                    if (nitem != null)
+                    {
+                        types.Add(nitem.ItemType);
+                    }
+                }
+
+                if (cell.NeighbourUp != null)
+                {
+                    NormalItem nitem = cell.NeighbourUp.Item as NormalItem;
+                    if (nitem != null)
+                    {
+                        types.Add(nitem.ItemType);
+                    }
+                }
+
+                if (cell.NeighbourLeft != null)
+                {
+                    NormalItem nitem = cell.NeighbourLeft.Item as NormalItem;
+                    if (nitem != null)
+                    {
+                        types.Add(nitem.ItemType);
+                    }
+                }
+
+                if (cell.NeighbourRight != null)
+                {
+                    NormalItem nitem = cell.NeighbourRight.Item as NormalItem;
+
+                    if (nitem != null)
+                    {
+                        types.Add(nitem.ItemType);
+                    }
+                }
+
+                var listTypeCanAccept = Utils.GetListNormalTypeExcept(types.ToArray());
+
+                var dictAmountOfEachType = GetAmountOfEachItemType();
+
+                var keys = dictAmountOfEachType.Keys.ToList();
+
+                for ( var i = 0; i < keys.Count; i++)
+                {
+                    if (!listTypeCanAccept.Contains(keys[i]))
+                    {
+                        dictAmountOfEachType.Remove(keys[i]);
+                    }    
+                }
+
+                var minKey = dictAmountOfEachType.Aggregate((l, r) => l.Value < r.Value ? l : r).Key;
+
+                item.SetType(minKey);
+                item.SetView();
+                item.SetViewRoot(m_root);
+
+                cell.Assign(item);
+                cell.ApplyItemPosition(false);
+            }
+        }
+    }
+
+
     internal void Shuffle()
     {
         List<Item> list = new List<Item>();
@@ -136,7 +249,7 @@ public class Board
     }
 
 
-    internal void FillGapsWithNewItems()
+    /*internal void FillGapsWithNewItems()
     {
         for (int x = 0; x < boardSizeX; x++)
         {
@@ -155,7 +268,7 @@ public class Board
                 cell.ApplyItemPosition(true);
             }
         }
-    }
+    }*/
 
     internal void ExplodeAllItems()
     {
