@@ -138,7 +138,7 @@ public class Board
                     }    
                     else
                     {
-                        dictTypeAndAmount[item.ItemType] = 1;
+                        dictTypeAndAmount.Add(item.ItemType, 1);
                     }    
                 }    
             }    

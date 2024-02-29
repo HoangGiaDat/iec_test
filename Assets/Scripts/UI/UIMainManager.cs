@@ -30,6 +30,12 @@ public class UIMainManager : MonoBehaviour
         m_gameManager.SetState(GameManager.eStateGame.MAIN_MENU);
     }
 
+    internal void RestartGame()
+    {
+        m_gameManager.ClearLevel();
+        m_gameManager.LoadLevel(m_gameManager.CurrentMode);
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
