@@ -1,0 +1,35 @@
+{
+    "name": "Sirenix.OdinInspector.Modules.UnityLocalization.Editor",
+    "rootNamespace": "",
+    "references": [
+        "Unity.Localization",
+        "Sirenix.Serialization",
+        "Sirenix.OdinInspector.Attributes",
+        "Sirenix.OdinInspector.Editor",
+        "Sirenix.Utilities.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        "Sirenix.Serialization.dll",
+        "Sirenix.OdinInspector.Attributes.dll",
+        "Sirenix.OdinInspector.Editor.dll",
+        "Sirenix.Utilities.Editor.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "ODIN_UNITY_LOCALIZATION"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.unity.localization",
+            "expression": "",
+            "define": "ODIN_UNITY_LOCALIZATION"
+        }
+    ],
+    "noEngineReferences": false
+}

@@ -1,0 +1,14 @@
+{
+  "name": "com.asset-store.sirenix.odin-inspector",
+  "displayName": "Asset-Store.Odin-Inspector",
+  "version": "3.1.6",
+  "unity": "2019.4",
+  "license": "MIT",
+  "author": {
+    "name": "Sirenix",
+    "url": "https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041"
+  },
+  "type": "tool",
+  "description": "Odin puts your Unity workflow on steroids, making it easy to build powerful and advanced user-friendly editors for you and your entire team.",
+  "samples": []
+}
