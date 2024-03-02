@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+
 
 [Serializable]
 public class Item
@@ -23,13 +22,15 @@ public class Item
 
             if (prefab)
             {
+                var prefabClone = SmartPool.Instance.Spawn(prefab, Vector3.zero, Quaternion.identity);
+
                 if (sprite != null)
                 {
-                    prefab.GetComponent<SpriteRenderer>().sprite = sprite;
+                    prefabClone.GetComponent<SpriteRenderer>().sprite = sprite;
                 }
 
 
-                View = GameObject.Instantiate(prefab).transform;
+                View = prefabClone.transform;
             }
         }
     }
@@ -111,7 +112,7 @@ public class Item
             View.DOScale(0.1f, 0.1f).OnComplete(
                 () =>
                 {
-                    GameObject.Destroy(View.gameObject);
+                    SmartPool.Instance.Despawn(View.gameObject);
                     View = null;
                 }
                 );
@@ -142,7 +143,7 @@ public class Item
 
         if (View)
         {
-            GameObject.Destroy(View.gameObject);
+            SmartPool.Instance.Despawn(View.gameObject);
             View = null;
         }
     }
