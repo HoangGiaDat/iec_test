@@ -9,6 +9,8 @@ public class LevelTime : LevelCondition
 
     private GameManager m_mngr;
 
+    private Coroutine timeRoutine;
+
     public override void Setup(float value, Text txt, GameManager mngr)
     {
         base.Setup(value, txt, mngr);
@@ -20,26 +22,44 @@ public class LevelTime : LevelCondition
         UpdateText();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (m_conditionCompleted) return;
-
-        if (m_mngr.State != GameManager.eStateGame.GAME_STARTED) return;
-
-        m_time -= Time.deltaTime;
-
-        UpdateText();
-
-        if (m_time <= -1f)
-        {
-            OnConditionComplete();
-        }
+        timeRoutine = StartCoroutine(UpdateTimeRoutine());
     }
+
+    private void OnDisable()
+    {
+        if (timeRoutine != null)
+        {
+            StopCoroutine(timeRoutine);
+        }    
+    }
+
 
     protected override void UpdateText()
     {
         if (m_time < 0f) return;
 
         m_txt.text = string.Format("TIME:\n{0:00}", m_time);
+    }
+
+    private IEnumerator UpdateTimeRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+
+            if (m_conditionCompleted) continue;
+
+            if (m_mngr.State != GameManager.eStateGame.GAME_STARTED) continue;
+
+            m_time -= 1;
+            UpdateText();
+
+            if (m_time < -0)
+            {
+                OnConditionComplete();
+            }
+        }
     }
 }
