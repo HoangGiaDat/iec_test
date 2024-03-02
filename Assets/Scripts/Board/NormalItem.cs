@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class NormalItem : Item
 {
@@ -56,13 +58,9 @@ public class NormalItem : Item
     protected override Sprite GetSprite()
     {
         Sprite sprite = null;
-
         var gameConfig = Resources.Load<GameSettings>("gamesettings");
-
         var themeSkin = gameConfig.skin;
-
-        sprite = Resources.Load<Sprite>($"skins/skin_{themeSkin}/{(int) ItemType + 1}");   
-
+        sprite = LoadResourcesController.Instance.LoadSpriteFromAtlas("skin", $"{themeSkin}_{(int)ItemType + 1}"); 
         return sprite;
     }
 
