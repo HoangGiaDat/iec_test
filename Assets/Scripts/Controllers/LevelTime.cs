@@ -15,7 +15,7 @@ public class LevelTime : LevelCondition
     {
         base.Setup(value, txt, mngr);
 
-        m_mngr = mngr;
+        m_mngr = GameManager.Instance;
 
         m_time = value;
 

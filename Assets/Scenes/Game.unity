@@ -2542,7 +2542,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
 --- !u!114 &2110808866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2640,6 +2640,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ed4360ab36daef4c9dd32250c4fa46d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  m_uiMenu: {fileID: 2110808864}
 --- !u!4 &2136919903
 Transform:
   m_ObjectHideFlags: 0

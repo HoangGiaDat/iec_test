@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : SingletonMono<GameManager>
 {
     public event Action<eStateGame> StateChangedAction = delegate { };
 
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
 
     private BoardController m_boardController;
 
-    private UIMainManager m_uiMenu;
+    [SerializeField] private UIMainManager m_uiMenu;
 
     private LevelCondition m_levelCondition;
 
@@ -58,7 +58,6 @@ public class GameManager : MonoBehaviour
 
         m_gameSettings = Resources.Load<GameSettings>(Constants.GAME_SETTINGS_PATH);
 
-        m_uiMenu = FindObjectOfType<UIMainManager>();
         m_uiMenu.Setup(this);
     }
 

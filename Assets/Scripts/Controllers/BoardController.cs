@@ -33,7 +33,7 @@ public class BoardController : MonoBehaviour
 
     public void StartGame(GameManager gameManager, GameSettings gameSettings)
     {
-        m_gameManager = gameManager;
+        m_gameManager = GameManager.Instance;
 
         m_gameSettings = gameSettings;
 
